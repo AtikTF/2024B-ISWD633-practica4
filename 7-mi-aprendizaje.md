@@ -1,3 +1,1 @@
-# COMPLETAR  
-Comparando sus conocimientos antes de hacer la práctica con sus conocimientos después de hacer la tarea, explicar los principales aprendizajes logrados para beneficio de su formación profesional.  
-Si solucionó un problema presentado al realizar la práctica también se debe documentar.
+El principal desafío que encontré fue al intentar modificar el Dockerfile original que utilizaba CentOS, para cambiarlo a Ubuntu. La transición de yum (el gestor de paquetes de CentOS) a apt-get (el gestor de paquetes de Ubuntu) fue sencilla, pero me encontré con problemas de compatibilidad al instalar los paquetes necesarios, ya que Ubuntu tiene una estructura ligeramente diferente en cuanto a la gestión de paquetes y la configuración de servicios. Esto me obligó a investigar más sobre las diferencias entre los dos sistemas operativos y a comprender cómo funciona la instalación y configuración de Apache en Ubuntu, además de ajustar los comandos de inicio del servicio.
