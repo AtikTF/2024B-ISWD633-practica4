@@ -53,17 +53,33 @@ docker build -t <nombre imagen>:<tag> .
 ### Ejecutar el archivo Dockerfile y construir una imagen en la versión 1.0
 No olvides verificar en qué directorio se encuentra el archivo Dockerfile
 ```
-
+docker build -t myapp:1.0 .
 ```
 
 **¿Cuántos pasos se han ejecutado?**
-# RESPONDER 
+
+En el proceso de construcción de la imagen, se han ejecutado 9 pasos:
+
+1. Cargar la definición de la construcción desde el `Dockerfile`.
+2. Cargar metadatos de la imagen base `ubuntu:latest`.
+3. Resolver y extraer la imagen base.
+4. Cargar el contexto de construcción.
+5. Ejecutar `RUN apt-get update && apt-get -y upgrade`.
+6. Ejecutar `RUN apt-get install -y apache2`.
+7. Ejecutar `COPY ./web /var/www/html`.
+8. Exportar la imagen y sus capas.
+9. Asignar un nombre a la imagen.
+
+![pasos](img/pasosEjecutados.PNG)
 
 ### Inspeccionar la imagen creada
-# COMPLETAR CON UNA CAPTURA
+
+![inspeccionar](img/inspeccionar.PNG)
 
 **Modificar el archivo index.html para incluir su nombre y luego crear una nueva versión de la imagen anterior**
-**¿Cuántos pasos se han ejecutado? ¿Observa algo diferente en la creación de la imagen**
+**¿Cuántos pasos se han ejecutado? ¿Observa algo diferente en la creación de la imagen?**
+
+Docker reutilizará la caché para las instrucciones anteriores (FROM, RUN yum -y update, RUN yum -y install httpd). Solo el paso COPY y los pasos posteriores se ejecutarán nuevamente. Esto demuestra el uso del mecanismo de caché de Docker.
 
 ## Mecanismo de caché
 Docker usa un mecanismo de caché cuando crea imágenes para acelerar el proceso de construcción y evitar la repetición de pasos que no han cambiado. Cada instrucción en un Dockerfile crea una capa en la imagen final. Docker intenta reutilizar las capas de una construcción anterior si no han cambiado, lo que reduce significativamente el tiempo de construcción.
@@ -75,14 +91,16 @@ Docker usa un mecanismo de caché cuando crea imágenes para acelerar el proceso
 
 ### Crear un contenedor a partir de las imagen creada, mapear todos los puertos
 ```
-
+docker run -d -p 80:80 --name my-running-app myapp:2.0
 ```
 
 ### ¿Con que puerto host se está realizando el mapeo?
-# COMPLETAR CON LA RESPUESTA
+
+El puerto 80 del contenedor está mapeado al puerto 80 del host.
 
 **¿Qué es una imagen huérfana?**
-# COMPLETAR CON LA RESPUESTA
+
+Una imagen huérfana es una imagen intermedia que no tiene un nombre o etiqueta y no está asociada a ningún contenedor en ejecución. Estas imágenes suelen generarse cuando se reconstruyen imágenes y las versiones anteriores ya no se utilizan.
 
 ### Identificar imágenes huérfanas
 ```
